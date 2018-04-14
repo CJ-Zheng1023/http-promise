@@ -1,50 +1,54 @@
 let http = require('http')
-//let Promise = require('bluebird')
-const urlArr = [
+let Promise = require('bluebird')
+/*const urlArr = [
     'http://www.baidu.com',
     'http://www.neusoft.com',
     'http://www.hoopchina.com',
+    'http://www.google.com',
     'http://www.163.com'
-
+]*/
+const urlArr = [
+    'http://10.51.52.18/seas/downloadmedia/default/3062830557/PNG/0'
 ]
 
 let startRequestAsync = (url) => {
     let p = new Promise((resolve, reject) => {
         http.request(url, (res) => {
-            console.log(`${url} start`)
+            //console.log(`${url} start`)
             res.on('data', (chunck) => {
 
             })
             res.on('end', () => {
-                console.log(`${url} is done`)
+                //console.log(`${url} is done`)
                 resolve()
             })
-        }).on('error', () => {
-            console.log(`${url} is error`)
+        }).on('error', (e) => {
+            console.error(`${url} is error`)
+            reject(e)
         }).end()
     })
     return p
 }
 
-/*Promise.map(urlArr, (url) => startRequestAsync(url)
-, {concurrency: 2}).then(() => {
+Promise.map(urlArr, (url) => startRequestAsync(url)
+, {concurrency: 1}).then(() => {
     console.log(`all url is done`)
 }).catch((e) => {
     console.log(`error:${e.message}`)
-})*/
+})
 
 
-let promises = []
+/*let promises = []
 for(let url of urlArr){
     promises.push(startRequestAsync(url))
 }
-/*Promise.all(promises).then(() => {
+Promise.all(promises).then(() => {
     console.log(`all url is done`)
 }).catch((e) => {
     console.log(`error is:${e.message}`)
 })*/
 
-let shardingPromise = (sharding) => {
+/*let shardingPromise = (sharding) => {
     let sp = Promise.all(sharding).then(() => {
         console.log(`all url is done`)
     })
@@ -53,6 +57,6 @@ let shardingPromise = (sharding) => {
 let sp = shardingPromise([promises[0], promises[1]])
 sp.then((sharding) => {
     shardingPromise(sharding)
-})
+})*/
 
 
