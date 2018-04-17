@@ -8,7 +8,8 @@ let Promise = require('bluebird')
     'http://www.163.com'
 ]*/
 const urlArr = [
-    'http://10.51.52.18/seas/downloadmedia/default/3062830557/PNG/0'
+    'http://www.baidu.com',
+    'http://www.163.com'
 ]
 
 let startRequestAsync = (url) => {
@@ -20,6 +21,7 @@ let startRequestAsync = (url) => {
             })
             res.on('end', () => {
                 //console.log(`${url} is done`)
+                //resolve(html)
                 resolve()
             })
         }).on('error', (e) => {
