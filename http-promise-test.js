@@ -1,23 +1,24 @@
 let Promise = require('bluebird')
 let http = require('http')
-
 let startRequest = (url) => {
-    let p = new Promise((resolve, reject) => {
-        let req = http.request(url, (res) => {
-            resolve(res)
-        })
-    req.on('error', (e) => {
-        reject(e);
-})
-    req.end()
-})
-    return p
+    return new Promise((resolve, reject) => {
+        http.request(url, (res) => {
+            let html = ''
+            res.on('data', (chunck) => {
+                html += chunck
+            })
+            res.on('end', () => {
+                console.log('url is done')
+                resolve(html)
+            })
+        }).on('error', (e) => {
+            console.log(e)
+        }).end()
+    })
 }
-startRequest('http://www.neusoft.com').then((res) => {
-    console.log(`in resolve`)
-res.on('end', () => {
-    console.log(`请求结束!`)
+startRequest('http://www.baidu.com').then((html) => {
+    return html + '!!!!!!!!!!!!!!!!!!'
+}).then((data) => {
+    console.log(data)
 })
-}).catch((e) => {
-    console.log(`遇到问题${e.message}`)
-})
+

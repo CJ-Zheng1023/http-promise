@@ -1,11 +1,16 @@
 let ajax = {
     get(url, callback){
         console.log(`request url:${url}`)
-        //let rs = 'hello'
-        function doSucess(){
-            callback()
+        let obj = {
+            rs: 'rs'
         }
-        doSucess()
+        let flag = true
+        if(flag){
+            callback(new Error('error!!!!!!!!!'), obj)
+        }else{
+            callback(null, obj)
+        }
+
     },
 
 }

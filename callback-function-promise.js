@@ -1,7 +1,5 @@
 let Promise = require('bluebird')
 let obj = {}
-let fs = require('fs')
-fs.readFile()
 let func1Promise = (obj) => {
     return  new Promise((resolve, reject) => {
         obj.func1 = 'func1'
@@ -34,6 +32,6 @@ func1Promise(obj).then((obj) => {
     })
 }).then((val) => {
     return 5 * val
-}).then((data) => {
-    console.log(data)
+}).then(function(obj){
+    console.log(obj)
 })
