@@ -7,17 +7,17 @@ phantom.create().then((instance) => {
     return instance.createPage()
 }).then((page) => {
     p =page
-    return page.open('http://www.baidu.com')
+    return page.open('http://www.hoopchina.com')
 }).then((status) => {
     if(status === "success") {
         return p.invokeAsyncMethod('includeJs', 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
     }
-}).then(function(){
+}).then(() => {
     return p.invokeMethod('evaluate', function(){
         return $('body').html()
         //return document.querySelector('body').innerHTML
     })
-}).then(function(html){
+}).then((html) => {
     console.log(html)
     t = Date.now() - t
     console.log(t)
