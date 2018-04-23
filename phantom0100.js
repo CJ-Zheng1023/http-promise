@@ -1,4 +1,5 @@
 let phantom = require('phantom')
+let $ = require('cheerio')
 let pInstance = null
 let p = null
 var t = Date.now();
@@ -10,15 +11,12 @@ phantom.create().then((instance) => {
     return page.open('http://www.hoopchina.com')
 }).then((status) => {
     if(status === "success") {
-        return p.invokeAsyncMethod('includeJs', 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
+        return p.invokeMethod('evaluate', function(){
+            return document.querySelector('body').innerHTML
+        })
     }
-}).then(() => {
-    return p.invokeMethod('evaluate', function(){
-        return $('body').html()
-        //return document.querySelector('body').innerHTML
-    })
 }).then((html) => {
-    console.log(html)
+    console.log($(html).find('.playerNum').html())
     t = Date.now() - t
     console.log(t)
     pInstance.exit()
